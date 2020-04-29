@@ -120,6 +120,97 @@
           }
         }
       }
+    },
+    "pwa-functions": {
+      "root": "apps/pwa-functions",
+      "sourceRoot": "apps/pwa-functions/src",
+      "projectType": "application",
+      "prefix": "pwa-functions",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/pwa-functions",
+            "main": "apps/pwa-functions/src/main.ts",
+            "tsConfig": "apps/pwa-functions/tsconfig.app.json",
+            "assets": ["apps/pwa-functions/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/pwa-functions/src/environments/environment.ts",
+                  "with": "apps/pwa-functions/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "pwa-functions:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/pwa-functions/tsconfig.app.json",
+              "apps/pwa-functions/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/pwa-functions/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/pwa-functions/jest.config.js",
+            "tsConfig": "apps/pwa-functions/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "functions": {
+      "root": "libs/functions",
+      "sourceRoot": "libs/functions/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/functions/tsconfig.lib.json",
+              "libs/functions/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/functions/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/functions/jest.config.js",
+            "tsConfig": "libs/functions/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/functions",
+            "tsConfig": "libs/functions/tsconfig.lib.json",
+            "packageJson": "libs/functions/package.json",
+            "main": "libs/functions/src/index.ts",
+            "assets": ["libs/functions/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {

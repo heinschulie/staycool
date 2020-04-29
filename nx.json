@@ -25,6 +25,12 @@
     "pwa-e2e": {
       "tags": [],
       "implicitDependencies": ["pwa"]
+    },
+    "pwa-functions": {
+      "tags": ["platform-functions"]
+    },
+    "functions": {
+      "tags": ["platform-backend"]
     }
   }
 }

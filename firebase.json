@@ -1,0 +1,24 @@
+{
+  "functions": {
+    "source": ""
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "**/apps/**",
+      "**/libs/**",
+      "**/tools/**",
+      "**/node_modules/**",
+      "**/.*",
+      "**/.*",
+      "*.json",
+      "firebase.json"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

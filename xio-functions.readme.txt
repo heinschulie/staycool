@@ -1,0 +1,47 @@
+
+Important thoughts and lessons: 
+
+This was the command run. 
+npm run build functions && firebase deploy --debug --only functions --project coviz-19
+
+The debug gives a long tail of debugging messages that are really helpful. 
+
+For that command to work though I had to do two things: 
+
+1) CloudFunctions Admin permissions had to be added to the application default service account in GCP. 
+See this article: https://firebase.google.com/docs/projects/iam/permissions#functions
+
+*This will have to be added for each project that the NX repo interacts with. 
+
+2) I had to remove the npm start and the npm postinstall command. If not removed, the functions environment will be 
+instructed to set up your angular environment, which is obviously not the idea. It will fail in any case. I'm assumming 
+this is a bit of an impasse and so perhaps having a second package.json that deals only with functions is not the worst 
+idea. This will also avoid installing ALL your node packages for your entire mono-repo in your functions environment.
+
+Alternatively, a script that runs (like the one I have for hosting deployment) that dynamically changes the environment 
+when the deployment script is run. 
+
+Ask advice on this cause you don't know enough.
+
+To understand what you're altering, read this. 
+https://docs.npmjs.com/misc/scripts
+
+
+
+// invalid token. 
+
+This nightmare consists of equal parts lack of understanding and lack of documentation. The application default service account
+handles (by default) the authentication into other services - for which it requires explicit roles to be able to do. The previously 
+unknown fact here however is that in development it seems to be designed to mimic the access that the user him/herself has... but what it 
+doesn't do is automatically updated it's own credentials when the user reauthenticates. This needs to be done manually 
+as described here: https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login
+
+This in theory should allow functions to be tested locally without needing to resort to a separate service account being
+referenced via a key file. 
+
+Also, silly but very easy to forget: One must switch between projects on gcloud in terminal. 
+
+
+1) I'm not sure why my logged in Owner user was not enough but to be able to get this to run from the root of 
+the NX project I had to add CloudFunctions Admin permissions to my service account in GCP. 
+See this article: https://firebase.google.com/docs/projects/iam/permissions#functions

@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@staycool/functions": ["libs/functions/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
